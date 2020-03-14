@@ -3,10 +3,14 @@ as well as its next node in the List."""
 
 
 class ListNode:
-    def __init__(self, value, prev=None, next=None):
+    def __init__(self, key, value, prev=None, next=None):
+        self.key = key
         self.value = value
         self.prev = prev
         self.next = next
+
+    def __str__(self):
+        return f"{self.key} : {self.value}"
 
     """Wrap the given value in a ListNode and insert it
     after this node. Note that this node could already
@@ -59,9 +63,9 @@ class DoublyLinkedList:
     """Wraps the given value in a ListNode and inserts it 
     as the new head of the list. Don't forget to handle 
     the old head node's previous pointer accordingly."""
-    def add_to_head(self, value):
+    def add_to_head(self, key, value):
         # adding to an empty list
-        new_node = ListNode(value)   
+        new_node = ListNode(key, value)   
         self.length += 1
         if self.head is None and self.tail is None:
             # create a new node
@@ -104,9 +108,9 @@ class DoublyLinkedList:
     """Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 
     the old tail node's next pointer accordingly."""
-    def add_to_tail(self, value):
+    def add_to_tail(self, key, value):
         # adding to an empty list
-        new_node = ListNode(value)   
+        new_node = ListNode(key, value)   
         self.length += 1
         if self.head is None and self.tail is None:
             # create a new node
@@ -145,24 +149,27 @@ class DoublyLinkedList:
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List."""
-    def move_to_front(self, node):
+    def move_to_front(self, key, value):
+        node = ListNode(key, value)
         # Add node value to head
-        self.add_to_head(node.value)
+        self.add_to_head(node.key, node.value)
         # Delete node
-        self.delete(node)
+        self.delete(node.key, node.value)
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List."""
-    def move_to_end(self, node):
+    def move_to_end(self, key, value):
+        node = ListNode(key, value)
         # Add node value to tail
-        self.add_to_tail(node.value)
+        self.add_to_tail(node.key, node.value)
         # Delete node
-        self.delete(node)
+        self.delete(node.key, node.value)
 
 
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
-    def delete(self, node):
+    def delete(self, key, value):
+        node = ListNode(key, value)
         # check if empty list
         if not self.head and not self.tail:
             print('ERROR: Attempted to delete node not in list')
