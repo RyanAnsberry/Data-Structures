@@ -61,13 +61,13 @@ class LRUCache:
                 self.entries.move_to_front(key, value)
         
         else:
-            # Increase current size
-            self.current_size += 1
             # Remove tail node if current size is bigger than limit
-            if self.current_size > self.limit:
+            if self.current_size == self.limit:
                 self.entries.remove_from_tail()
                 self.dictionary.pop(self.entries.tail.key)
                 self.current_size -= 1
+            # Increase current size
+            self.current_size += 1
             # Add new entry node to head of DLL and add new entry to dictionary
             self.entries.add_to_head(key, value)
             self.dictionary[key] = value
